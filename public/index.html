@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<!--
+    ANGULAR CALCULATOR v0.35
+    by Peter Martinson
+    July 20, 2016
+
+    Portfolio with Bootstrap,
+    mainly for the social media buttons!
+-->
+
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/goldenspiral.css"/>
+    <link rel="stylesheet" type="text/css" href="css/calculator.css"/>
+
+    <title>Angular Calculator</title>
+  </head>
+  <body>
+
+    <header id="Top">
+      <div id="splash">
+        <div id="icon">
+          <div id="square-4"></div>
+          <div id="square-3"></div>
+          <div>
+          <div style="float: left">
+          <div id="gold-rect"></div>
+          </div>
+          <div id="square-1"></div>
+          </div>
+          <div id="square-2"></div>
+        </div>
+        <h1>STONE TELESCOPE</h1>
+      </div>
+    </header>
+
+    <div id='main'>
+        <nav>
+          by PETER MARTINSON<br><br>
+          <a href="#About"   >About</a><br>
+          <a href="#Projects">Projects</a><br>
+          <a href="#Contact" >Contact</a>
+          
+        </nav>
+
+        <article>
+          <div style="margin:auto">
+            <div ng-view></div>
+          </div>
+        </article>
+
+      </div>
+    
+    <footer>
+    </footer>
+    </div>
+  
+    <script src="vendor/angular.js">       </script>
+    <script src="vendor/angular-route.js"> </script>
+    <script src="app.js">                  </script>
+    <script src="calculator/calculator.js"></script>
+
+  </body>
+</html>

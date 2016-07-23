@@ -1,0 +1,145 @@
+body {
+    /*font-family: 'Palatino Linotype','Book Antiqua',Palatino,serif;*/
+    font-family: 'Trebuchet MS',Helvetica,sans-serif;
+    font-size: 12px;
+    background: #354044;
+    color: #f8fafa;
+}
+
+.primary {
+  background-color: #107691;
+}
+.gray-dark {
+  background-color: #354044;
+}
+.gray-light {
+  background-color: #f8fafa;
+}
+.white {
+  background-color: #ffffff;
+}
+.black {
+  background-color: #000000;
+}
+.accent {
+  background-color: #E97F13;
+}
+
+header {
+  display: block;
+  margin: 0px;
+  padding: 100px 0px 10px 150px;
+  border: 0px solid #e97f13;
+  background: #354044;
+}
+
+nav {
+    margin: 10px 0px 0px 0px;
+    padding: 15px;
+    width: 190px;
+    height: 500px;
+    border: 0px solid #e97f13;
+    background: #354044;
+    text-align: right;
+    float: left;
+}
+
+#icon {
+    margin-left: 147px;
+    margin-right: 5px;
+    float: left;
+}
+
+#splash {
+    margin-left: 0px;
+    padding: 0px;
+    border: 0px solid #e97f13;
+    background: #354044;
+}
+
+#splash > h1 {
+    font-size: 36px;
+    font-weight: normal;
+    margin: 0px;
+    padding: 28px 0px 0px 10px;
+    float: left;
+}
+
+
+#main {
+    margin-left: 150px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background: #354044;
+    padding: 0px;
+    display: block;
+    clear: both;
+}
+
+article {
+    margin: 0px;
+    max-width: 600px;
+    padding: 10px;
+    border: 0px solid #e97f13;
+    background: #354044;
+    float: left;
+}
+
+.projects img {
+    display: block;
+    width: 300px;
+    margin: auto;
+}
+
+.projects p {
+    text-align: center;  
+}
+
+.projects hr {
+    width: 100px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+#main > aside {
+    margin: 4px;
+    padding: 5px;
+    border: 0px solid #e97f13;
+    background: #354044;
+}
+
+footer {
+    display: block;
+    margin: 0px;
+    padding: 5px;
+    min-height: 100px;
+    border: 0px solid #e97f13;
+    background: #354044;
+    clear: both;
+}
+
+p, li, a {
+    color: #f8fafa;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+a:hover {
+    color: #e97f13;
+}
+
+h1 {
+    color: #f8fafa;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+h2 {
+    color: #f8fafa;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: normal;
+}
+
