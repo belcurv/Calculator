@@ -44,6 +44,10 @@ nav {
     float: left;
 }
 
+nav > p {
+    text-align: left;
+}
+
 #icon {
     margin-left: 147px;
     margin-right: 5px;

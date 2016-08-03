@@ -47,17 +47,16 @@ cap the result of calculations to 10 digits
 
 angular.module('myApp.calculatorApp', [])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/calculator', {
-    templateUrl: 'calculator/calculator.html',
-    controller: 'CalculatorCtrl',
-    controllerAs: 'calc'
-  });
-}])
+// .config(['$routeProvider', function($routeProvider) {
+//   $routeProvider.when('/calculator', {
+//     templateUrl: 'calculator/calculator.html',
+//     controller: 'CalculatorCtrl',
+//     controllerAs: 'calc'
+//   });
+// }])
 
 .controller('CalculatorCtrl', function() {
-  var self = this,
-      signs = /[+\-\*\/]/;
+  var self = this;
 
 /*
  * DETERMINE CALCULATOR STATE
@@ -633,7 +632,6 @@ angular.module('myApp.calculatorApp', [])
     }
   };
 });
-
 
 
 

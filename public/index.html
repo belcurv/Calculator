@@ -4,9 +4,6 @@
     ANGULAR CALCULATOR v0.35
     by Peter Martinson
     July 20, 2016
-
-    Portfolio with Bootstrap,
-    mainly for the social media buttons!
 -->
 
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -38,22 +35,24 @@
           </div>
           <div id="square-2"></div>
         </div>
-        <h1>STONE TELESCOPE</h1>
+        <h1>Angular Calculator</h1>
       </div>
     </header>
 
     <div id='main'>
         <nav>
           by PETER MARTINSON<br><br>
-          <a href="#About"   >About</a><br>
-          <a href="#Projects">Projects</a><br>
-          <a href="#Contact" >Contact</a>
+          <p>
+            Basic calculator that uses AngularJS for DOM manipulation.
+            Everything else is CSS and HTML.
+          </p>
           
         </nav>
 
         <article>
           <div style="margin:auto">
-            <div ng-view></div>
+            <theCalculator></theCalculator>
+            <!--div ng-view></div-->
           </div>
         </article>
 
@@ -63,10 +62,10 @@
     </footer>
     </div>
   
-    <script src="vendor/angular.js">       </script>
-    <script src="vendor/angular-route.js"> </script>
-    <script src="app.js">                  </script>
-    <script src="calculator/calculator.js"></script>
+    <script src="vendor/angular/angular.js">                           </script>
+    <script src="vendor/angular-route/angular-route.js">               </script>
+    <script src="app.js">                                              </script>
+    <script src="calculator/calculator.js">                            </script>
 
   </body>
 </html>
