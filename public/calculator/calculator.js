@@ -1,11 +1,8 @@
 /*jslint white:true*/
 /*
 issues:
-division by zero
 cap the result of calculations to 10 digits
-  -> tried the trim() function, doesn't work for some reason
-  -> you're updating the screen
-  -> do you need to update any of the values?
+  -> fix trim.  It only returns one decimal, but works otherwise.
 */
 
 /*
@@ -39,21 +36,21 @@ cap the result of calculations to 10 digits
  * Case 1) 0,A|   |   |   |   | if ( this.opA === 'empty' )
  * Case 2)  A |   |   | + |   | if ( this.opA !== 'empty' && this.regB === 'empty' )
  * Case 3)  A | B |   |+,*|   | if ( this.opA !== 'empty' && this.regA !== 'empty' && this.opB === 'empty' ) -> check opA& b
- * Case 4)  A | B |   | * | + | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
- * Case 5)  A | B | C | * | + | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
+ * Case 4)  A | B |   | + | * | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
+ * Case 5)  A | B | C | + | * | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
 */
 
 'use strict';
 
 angular.module('myApp.calculatorApp', [])
 
-// .config(['$routeProvider', function($routeProvider) {
-//   $routeProvider.when('/calculator', {
-//     templateUrl: 'calculator/calculator.html',
-//     controller: 'CalculatorCtrl',
-//     controllerAs: 'calc'
-//   });
-// }])
+.config(['$routeProvider', function($routeProvider) {
+ $routeProvider.when('/calculator', {
+   templateUrl: 'calculator/calculator.html',
+   controller: 'CalculatorCtrl',
+   controllerAs: 'calc'
+ });
+}])
 
 .controller('CalculatorCtrl', function() {
   var self = this;
@@ -66,15 +63,17 @@ angular.module('myApp.calculatorApp', [])
  * Case 1) 0,A|   |   |   |   | if ( this.opA === 'empty' )
  * Case 2)  A |   |   | + |   | if ( this.opA !== 'empty' && this.regB === 'empty' )
  * Case 3)  A | B |   |+,*|   | if ( this.opA !== 'empty' && this.regA !== 'empty' && this.opB === 'empty' ) -> check opA& b
- * Case 4)  A | B |   | * | + | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
- * Case 5)  A | B | C | * | + | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
+ * Case 4)  A | B |   | + | * | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
+ * Case 5)  A | B | C | + | * | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
 */
   function calState(A, B, C, oA, oB) {
-    if ( oA === 'empty' )                                   { return 1; }
-    if ( oA !== 'empty' && B === 'empty' )                  { return 2; }
-    if ( oA !== 'empty' && A !== 'empty' && oB === 'empty' ){ return 3; }
-    if ( oB !== 'empty' && C === 'empty' )                  { return 4; }
-    if ( oB !== 'empty' && C !== 'empty' )                  { return 5; }
+    if ( A === 'DIV BY 0'  || B === 'DIV BY 0' )                       { return 6; }
+    if ( A === 'ERROR'  || B === 'ERROR' )                       { return 6; }
+    else if ( oA === 'empty' )                                   { return 1; }
+    else if ( oA !== 'empty' && B === 'empty' )                  { return 2; }
+    else if ( oA !== 'empty' && A !== 'empty' && oB === 'empty' ){ return 3; }
+    else if ( oB !== 'empty' && C === 'empty' )                  { return 4; }
+    else if ( oB !== 'empty' && C !== 'empty' )                  { return 5; }
   }
 
   // output information about value
@@ -85,6 +84,20 @@ angular.module('myApp.calculatorApp', [])
       console.log(" length: " + v.length);
     }
     console.log(" value:  " + v);
+  }
+
+  // constrain screened value to < 10 characters
+  function trim(num) {
+    if ( num.toString().indexOf('.') < 0 && num.toString().length > 10 ) {
+      // no decimal, longer than 10 chars
+      num = 'ERROR';
+    }
+    else if ( num.toString().indexOf('.') > -1 && num.toString().length > 10 ) {
+      num = Number(num);
+      num = Math.round(num * Math.pow(10, Math.round(num).toString().length)) /
+                   Math.pow(10, Math.round(num).toString().length);
+    }
+    return num.toString();
   }
 
   /*
@@ -104,33 +117,20 @@ angular.module('myApp.calculatorApp', [])
     l = Number(l);
     r = Number(r);
     if ( o === '+' ) {
-      return (l+r).toString();
+      return trim((l+r).toString());
     }
     if ( o === '-' ) {
-      return (l-r).toString();
+      return trim((l-r).toString());
     }
     if ( o === '*' ) {
-      return (l*r).toString();
+      return trim((l*r).toString());
     }
     if ( o === '/' ) {
-      if ( r === '0' ) {
+      if ( r === 0 ) {
         return 'DIV BY 0';
       }
-        return (l/r).toString();
+        return trim((l/r).toString());
     }
-  }
-
-  // constrain screened value to < 10 characters
-  function trim(val) {
-    if ( val.toString().indexOf('.') < 0 && val.toString().length > 10 ) {
-      // no decimal, longer than 10 chars
-      val = 'ERROR';
-    }
-    else if ( val.toString().indexOf('.') > -1 && val.toString().length > 10 ) {
-      val = Math.round(val * Math.pow(10, Math.round(val).toString().length)) /
-                   Math.pow(10, Math.round(val).toString().length);
-    }
-    return val;
   }
 
   self.inBuffer = {
@@ -164,8 +164,8 @@ angular.module('myApp.calculatorApp', [])
  * Case 1) 0,A|   |   |   |   | (regA=0) replace regA, (regA=N,<10char) append to regA
  * Case 2)  A |   |   | + |   | Replace regB
  * Case 3)  A | B |   |+,*|   | (regB<10char) Append to regB
- * Case 4)  A | B |   | * | + | Replace regC
- * Case 5)  A | B | C | * | + | (regC<10char) Append to regC
+ * Case 4)  A | B |   | + | * | Replace regC
+ * Case 5)  A | B | C | + | * | (regC<10char) Append to regC
 */
       if (typeof b === 'number') {
         switch (calState(this.regA, this.regB, this.regC, this.opA, this.opB)) {
@@ -198,6 +198,8 @@ angular.module('myApp.calculatorApp', [])
               this.regC = this.regC.toString() + b;
               this.screenFlag = 3;
             }
+            break;
+          case 6:
             break;
           default:
             console.log("something other than NUMBER happened!");
@@ -235,39 +237,39 @@ angular.module('myApp.calculatorApp', [])
             }
             else {
               this.regA = operate(this.regA, this.opA, this.regB);
-              if ( this.regA === 'DIV BY 0' ) {
-                this.regA = 'DIV BY 0';
-                this.regB = 'empty';
-                this.regC = 'empty';
-                this.opA = 'empty';
-                this.opB = 'empty';
-                this.screenFlag = 1;
-              }
-              else {
+//              if ( this.regA === 'DIV BY 0' ) {
+//                this.regA = 'DIV BY 0';
+//                this.regB = 'empty';
+//                this.regC = 'empty';
+//                this.opA = 'empty';
+//                this.opB = 'empty';
+//                this.screenFlag = 1;
+//              }
+//              else {
                 this.opA = b;
                 this.screenFlag = 1;
-              }
+//              }
             }
             break;
           case 4:
             if ( b === '+' || b === '-' ) {
               this.regB = operate(
                 this.regA, this.opA, operate(this.regB, this.opB, this.regB));
-              if ( this.regA === 'DIV BY 0' ) {
-                this.regA = 'DIV BY 0';
-                this.regB = 'empty';
-                this.regC = 'empty';
-                this.opA = 'empty';
-                this.opB = 'empty';
-                this.screenFlag = 1;
-              }
-              else {
+//              if ( this.regA === 'DIV BY 0' ) {
+//                this.regA = 'DIV BY 0';
+//                this.regB = 'empty';
+//                this.regC = 'empty';
+//                this.opA = 'empty';
+//                this.opB = 'empty';
+//                this.screenFlag = 1;
+//              }
+//              else {
                 this.regA = 'empty';
                 this.regC = 'empty';
                 this.opB = 'empty';
                 this.opA = b;
                 this.screenFlag = 1;
-              }
+//              }
             }
             else {
               this.opB = b;
@@ -278,38 +280,40 @@ angular.module('myApp.calculatorApp', [])
             if ( b === '+' || b === '-' ) {
               this.regB = operate(
                 this.regA, this.opA, operate(this.regB, this.opB, this.regC));
-              if ( this.regB === 'DIV BY 0' ) {
-                this.regA = 'DIV BY 0';
-                this.regB = 'empty';
-                this.regC = 'empty';
-                this.opA = 'empty';
-                this.opB = 'empty';
-                this.screenFlag = 1;
-              }
-              else {
+//              if ( this.regB === 'DIV BY 0' ) {
+//                this.regA = 'DIV BY 0';
+//                this.regB = 'empty';
+//                this.regC = 'empty';
+//                this.opA = 'empty';
+//                this.opB = 'empty';
+//                this.screenFlag = 1;
+//              }
+//              else {
                 this.regA = 'empty';
                 this.regC = 'empty';
                 this.opB = 'empty';
                 this.opA = b;
                 this.screenFlag = 1;
-              }
+//              }
             }
             else {
               this.regB = operate(this.regB, this.opB, this.regC);
-              if ( this.regB === 'DIV BY 0' ) {
-                this.regA = 'DIV BY 0';
-                this.regB = 'empty';
-                this.regC = 'empty';
-                this.opA = 'empty';
-                this.opB = 'empty';
-                this.screenFlag = 1;
-              }
-              else {
+//              if ( this.regB === 'DIV BY 0' ) {
+//                this.regA = 'DIV BY 0';
+//                this.regB = 'empty';
+//                this.regC = 'empty';
+//                this.opA = 'empty';
+//                this.opB = 'empty';
+//                this.screenFlag = 1;
+//              }
+//              else {
                 this.regC = 'empty';
                 this.opB = b;
                 this.screenFlag = 2;
-              }
+//              }
             }
+            break;
+          case 6:
             break;
           default:
             console.log("something other than OPERATOR happened!");
@@ -351,6 +355,8 @@ angular.module('myApp.calculatorApp', [])
           case 5:
             this.regC = Number(this.regC * -1).toString();
             this.screenFlag = 3;
+            break;
+          case 6:
             break;
           default:
             console.log("something other than PLUS-MINUS happened!");
@@ -399,6 +405,8 @@ angular.module('myApp.calculatorApp', [])
               this.regC = this.regC.toString() + '.';
             }
             break;
+          case 6:
+            break;
           default:
             console.log("something other than . happened!");
             break;
@@ -421,7 +429,7 @@ angular.module('myApp.calculatorApp', [])
         switch (calState(this.regA, this.regB, this.regC, this.opA, this.opB)) {
           case 1:
             if ( this.regA > 0 ) {
-              this.regA = Math.sqrt(Number(this.regA)).toString();
+              this.regA = trim(Math.sqrt(Number(this.regA)).toString());
               this.screenFlag = 1;
             }
             else if ( this.regA === 'empty' || this.regA === '0' ) {
@@ -439,7 +447,7 @@ angular.module('myApp.calculatorApp', [])
             break;
           case 2:
             if ( this.regA > 0 ) {
-              this.regB = Math.sqrt(Number(this.regA)).toString();
+              this.regB = trim(Math.sqrt(Number(this.regA)).toString());
               this.screenFlag = 2;
             }
             else {
@@ -453,7 +461,7 @@ angular.module('myApp.calculatorApp', [])
             break;
           case 3:
             if ( this.regB > 0 ) {
-              this.regB = Math.sqrt(Number(this.regB)).toString();
+              this.regB = trim(Math.sqrt(Number(this.regB)).toString());
               this.screenFlag = 2;
             }
             else {
@@ -467,7 +475,7 @@ angular.module('myApp.calculatorApp', [])
             break;
           case 4:
             if ( this.regB > 0 ) {
-              this.regC = Math.sqrt(Number(this.regB)).toString();
+              this.regC = trim(Math.sqrt(Number(this.regB)).toString());
               this.screenFlag = 3;
             }
             else {
@@ -481,7 +489,7 @@ angular.module('myApp.calculatorApp', [])
             break;
           case 5:
             if ( this.regC > 0 ) {
-              this.regC = Math.sqrt(Number(this.regC)).toString();
+              this.regC = trim(Math.sqrt(Number(this.regC)).toString());
               this.screenFlag = 3;
             }
             else {
@@ -492,6 +500,8 @@ angular.module('myApp.calculatorApp', [])
               this.opB = 'empty';
               this.screenFlag = 1;
             }
+            break;
+          case 6:
             break;
           default:
             console.log("something other than . happened!");
@@ -585,6 +595,8 @@ angular.module('myApp.calculatorApp', [])
               this.opA = 'empty';
               this.opB = 'empty';
             }
+            break;
+          case 6:
             break;
           default:
             console.log("something other than . happened!");
