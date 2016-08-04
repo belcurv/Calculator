@@ -1,18 +1,16 @@
 {
-    "name": "profile",
+    "name": "Calculator",
     "version": "1.0.0",
-    "description": "Profile App",
+    "description": "Calculator App",
     "main": "server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "",
+    "author": "PJM and JRS",
     "license": "ISC",
     "dependencies": {
         "express": "^4.14.0",
         "morgan": "^1.7.0",
-        "angular": "^1.5.8",
-        "angular-mocks": "^1.5.8",
+        "angular": "^1.5.8"
     }
 }

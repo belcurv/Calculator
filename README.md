@@ -20,11 +20,13 @@ Very little - it just initializes the app.  There's no need for routing, other m
 
 2.  got rid of ngRoute.  You're not doing any routing do there's no need to add complexity to all this.  What you really want is a directive.
 
-3.  refactored calculator controller and markup into a **directive** template and declaration.  Mostly copy/paste, but:
+3.  refactored calculator controller and markup into a **directive template and declaration** and a **factory**.  Mostly copy/paste, but:
 
-    * all previous controller logic is unchanged, except I switched to 'vm' instead of 'self'
+    * all previous controller logic moves to the factory
     
     * the previous controller is collected inside a function (`var calcController = function () {};`), which is referenced in the directive declaration object returned at the bottom.
+    
+    * directive controller uses 'vm' instead of 'self'.  All the controller does is link the view bindings with the factory
 
     * the change to 'vm' and 'controllerAs' requires prefixing calculator template methods and bindings with 'vm.'
     
