@@ -8,7 +8,7 @@ Simple calculator made with AngularJS served by Node/Express
 
 There's no need for a main controller since literally all the logic resides in the calculator directive:
 
-`/public/calculator/calculator/dir/js`
+`/public/calculator/calculator.dir.js`
 
 #### What's the mother module (app.js) doing?
 
@@ -32,4 +32,6 @@ Very little - it just initializes the app.  There's no need for routing, other m
     
 4.  Man, that calculator logic is crazy.
 
-5.  merged `notes.txt` with this README file!
+5.  Added a `.gitignore` file to stop tracking & pushing node_modules
+
+6.  merged `notes.txt` with this README file!
