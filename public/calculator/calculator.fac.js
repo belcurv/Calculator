@@ -13,7 +13,9 @@
         .factory('calcFactory', function () {
 
             // init main object; we'll return this later
-            var calcObj = {};
+            var calcObj = {
+                chatter: []
+            };
 
                 
             /*
@@ -49,11 +51,12 @@
             // output information about value
             // @param v string || number
             function diag(v) {
-                console.log(" type:   " + typeof v);
+                var tempString;
                 if (typeof v === 'string') {
-                    console.log(" length: " + v.length);
+                    calcObj.chatter.push("`" + v + "` is a string with length: " + v.length);
+                } else {
+                    calcObj.chatter.push("`" + v + "` is a: " + typeof v + " with value: " + v);
                 }
-                console.log(" value:  " + v);
             }
 
             // constrain screened value to < 10 characters
@@ -77,11 +80,8 @@
              * pattern: A + B -> l o r
              */
             function operate(l, o, r) {
-                console.log('About L:');
                 diag(l);
-                console.log('About O:');
                 diag(o);
-                console.log('About R:');
                 diag(r);
                 l = Number(l);
                 r = Number(r);

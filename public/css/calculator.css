@@ -50,3 +50,13 @@
   margin: auto;
   padding: 0px 10px 0px 0px;
 }
+
+
+.chatterbox {
+    position: fixed;
+    left: 5px;
+    bottom: 5px;
+    width: 360px;
+    height: 400px;
+    overflow-y: scroll;
+}
