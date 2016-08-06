@@ -53,7 +53,7 @@
 
 
 .chatterbox {
-    position: fixed;
+    position: relative;
     left: 5px;
     bottom: 5px;
     width: 360px;

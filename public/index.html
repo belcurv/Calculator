@@ -17,54 +17,36 @@
 
 <body>
 
-    <header id="Top">
-        <div id="splash">
-            <div id="icon">
-                <div id="square-4"></div>
-                <div id="square-3"></div>
-                <div>
-                    <div style="float: left">
-                        <div id="gold-rect"></div>
-                    </div>
-                    <div id="square-1"></div>
-                </div>
-                <div id="square-2"></div>
-            </div>
-            <h1>Angular Calculator</h1>
-        </div>
+    <header>
+        <h2>Angular Calculator</h2>
     </header>
 
-    <div id='main'>
-        <nav>
-            by PETER MARTINSON
-            <br>
-            <br>
-            <p>
-                Basic calculator that uses AngularJS for DOM manipulation. Everything else is CSS and HTML.
-            </p>
-
-        </nav>
-
+    <div id="main">
         <article>
-            <div style="margin:auto">
-                
-                <calc-directive></calc-directive>
-                
-            </div>
+            <calc-directive></calc-directive>
         </article>
-
+        
+        <nav>
+            <p>This is a simple calculator made with javascript, Angular 1.x, HTML and CSS flexboes. Credit my man Pete for the calculator logic.</p>
+            
+            <p>Highlights: the calculator is an Angular directive, the calculator logic resides in an Angular factory.</p>
+            
+            <p>It's served by a Node/Express backend but it doesn't really require one.</p>
+        </nav>
+        
+        <aside></aside>
     </div>
 
     <footer>
+        <p>Say footer one more time!</p>
     </footer>
-    </div>
 
+    <!-- JAVASCRIPT -->
     <script src="vendor/angular.js"></script>
     <script src="app.js"></script>
     <script src="calculator/calculator.fac.js"></script>
     <script src="calculator/calculator.dir.js"></script>
     
-
 </body>
 
 </html>

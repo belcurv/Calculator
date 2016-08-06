@@ -1,41 +1,43 @@
-<div class="calc-body gray-dark">
-    <div class="calc-screen black">
-        {{ vm.inBuffer.screen }}
-    </div>
-    <!--p>Left: {{ vm.inBuffer.left }}</p-->
-    <!--p>Operator: {{ vm.inBuffer.operator }}</p-->
-    <!--p>Right: {{ vm.inBuffer.right }}</p-->
-    <div>
-        <button class="calc-button accent" ng-click="vm.inBuffer.updateBuffer('C')">C</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('pm')">&plusmn;</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('root')">&#8730;</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('/')">&divide;</button>
-    </div>
-    <div>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(7)">7</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(8)">8</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(9)">9</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('*')">&times;</button>
-    </div>
-    <div>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(4)">4</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(5)">5</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(6)">6</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('-')">-</button>
-    </div>
-    <div>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(1)">1</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(2)">2</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(3)">3</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('+')">+</button>
-    </div>
-    <div>
-        <button class="calc-button primary" style="width:140px" ng-click="vm.inBuffer.updateBuffer(0)">0</button>
-        <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer('.')">.</button>
-        <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('=')">=</button>
+<div>
+    <div class="calc-body">
+        <div class="calc-screen black">
+            {{ vm.inBuffer.screen }}
+        </div>
+        <!--p>Left: {{ vm.inBuffer.left }}</p-->
+        <!--p>Operator: {{ vm.inBuffer.operator }}</p-->
+        <!--p>Right: {{ vm.inBuffer.right }}</p-->
+        <div>
+            <button class="calc-button accent" ng-click="vm.inBuffer.updateBuffer('C')">C</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('pm')">&plusmn;</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('root')">&#8730;</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('/')">&divide;</button>
+        </div>
+        <div>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(7)">7</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(8)">8</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(9)">9</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('*')">&times;</button>
+        </div>
+        <div>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(4)">4</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(5)">5</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(6)">6</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('-')">-</button>
+        </div>
+        <div>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(1)">1</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(2)">2</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer(3)">3</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('+')">+</button>
+        </div>
+        <div>
+            <button class="calc-button primary" style="width:140px" ng-click="vm.inBuffer.updateBuffer(0)">0</button>
+            <button class="calc-button primary" ng-click="vm.inBuffer.updateBuffer('.')">.</button>
+            <button class="calc-button gray-dark" ng-click="vm.inBuffer.updateBuffer('=')">=</button>
+        </div>
     </div>
 
-    <div class="chatterbox">
+    <div class="calcApp-chatterbox">
         <p>Chatter</p>
         <ul>
             <li ng-repeat="jabber in vm.chatter track by $index">
