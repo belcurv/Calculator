@@ -82,13 +82,13 @@ header, footer {
     #page {
         flex-direction: column;
     }
-    
-    #main > article,
-    #main > nav,
-    #main > aside {
-        /* Return them to document order */
-        order: 0;
+    #main > article {
+        order: 2;
     }
-    
-   
+    #main > nav {
+        order; 1;
+    }
+    #main > aside {
+        order: 3;
+    }
 }

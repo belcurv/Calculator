@@ -8,9 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link rel="stylesheet" type="text/css" href="css/goldenspiral.css" />
-    <link rel="stylesheet" type="text/css" href="css/calculator.css" />
+    <link rel="stylesheet" type="text/css" href="app.css" />
+    <link rel="stylesheet" type="text/css" href="calculator/calculator.css" />
 
     <title>Angular Calculator</title>
 </head>
@@ -27,14 +26,16 @@
         </article>
         
         <nav>
-            <p>This is a simple calculator made with javascript, Angular 1.x, HTML and CSS flexboes. Credit my man Pete for the calculator logic.</p>
+            <p>This is a simple calculator made with javascript, Angular 1.x, HTML and CSS flexboes. Credit my man <a href="https://github.com/peterjmartinson/Calculator" target="_blank">Pete</a> for the calculator logic.</p>
             
             <p>Highlights: the calculator is an Angular directive, the calculator logic resides in an Angular factory.</p>
             
             <p>It's served by a Node/Express backend but it doesn't really require one.</p>
         </nav>
         
-        <aside></aside>
+        <aside>
+            <chatterbox-directive>Chatter goes here...</chatterbox-directive>
+        </aside>
     </div>
 
     <footer>
@@ -42,10 +43,11 @@
     </footer>
 
     <!-- JAVASCRIPT -->
-    <script src="vendor/angular.js"></script>
+    <script src="vendor_js/angular.js"></script>
     <script src="app.js"></script>
     <script src="calculator/calculator.fac.js"></script>
     <script src="calculator/calculator.dir.js"></script>
+    <script src="chatterbox/chatterbox.dir.js"></script>
     
 </body>
 
