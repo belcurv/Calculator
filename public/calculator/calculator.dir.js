@@ -16,7 +16,6 @@
             var calcController = function () {
                 var vm = this;
                 vm.inBuffer = calcFactory.inBuffer;
-                vm.chatter  = calcFactory.chatter;
             };
             
             // all directives return an object (DDO)
