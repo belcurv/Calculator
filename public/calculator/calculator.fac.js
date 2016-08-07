@@ -1,7 +1,40 @@
-/*jslint white:true*/
+/*
+ * ANGULAR CALCULATOR v0.4
+ * by Peter Martinson
+ * June 22, 2016
+ * 
+ * @param regA String
+ * @param regB String
+ * @param regC String
+ * @param opA String
+ * @param opB String
+ * @param b String
+ *
+ * Pattern is as follows:
+ *   A + B * C = D
+ *
+ *     regA regB regC opA opB screen
+ * 1   A                      A (regA)
+ * 2   A              +       A (regA)
+ * 3   A    B                 B (regB)
+ * 4   A    B         +   *   B (regB)
+ * 5   A    B    C    +       C (regC)
+ * 6   D                      D (regA)
+ *
+ * b represents the button that has most recently been pressed
+ * possible values: 0-9, pm, +/-*, ., root, =
+ *
+ *          A | B | C |opA|opB|
+ *         ---|---|---|---|---|
+ * Case 1) 0,A|   |   |   |   | if ( this.opA === 'empty' )
+ * Case 2)  A |   |   | + |   | if ( this.opA !== 'empty' && this.regB === 'empty' )
+ * Case 3)  A | B |   |+,*|   | if ( this.opA !== 'empty' && this.regA !== 'empty' && this.opB === 'empty' ) -> check opA& b
+ * Case 4)  A | B |   | + | * | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
+ * Case 5)  A | B | C | + | * | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
+ */
 
 (function () {
-    
+
     'use strict';
 
     angular
@@ -15,9 +48,9 @@
             // init main object; we'll return this later
             var calcObj = {
                 chatter: []
-            };
+            },
+                chatObj = {};
 
-                
             /*
              * DETERMINE CALCULATOR STATE
              *
@@ -28,7 +61,7 @@
              * Case 3)  A | B |   |+,*|   | if ( this.opA !== 'empty' && this.regA !== 'empty' && this.opB === 'empty' ) -> check opA& b
              * Case 4)  A | B |   | + | * | if ( this.opB !== 'empty' && this.regC === 'empty' ) -> check b
              * Case 5)  A | B | C | + | * | if ( this.opB !== 'empty' && this.regC !== 'empty' ) -> check b
-            */
+             */
             function calState(A, B, C, oA, oB) {
                 if (A === 'DIV BY 0' || B === 'DIV BY 0') {
                     return 6;
@@ -48,32 +81,39 @@
                 }
             }
 
-            // output information about value
-            // @param v string || number
+            /* 
+             * OUTPUT INFORMATION ABOUT VALUE
+             * @param v string || number
+             */
             function diag(v) {
-                var tempString;
+                console.log("About " + v + ":");
                 if (typeof v === 'string') {
-                    calcObj.chatter.push("`" + v + "` is a string with length: " + v.length);
+                    console.log(v + " is a string with length: " + v.length);
                 } else {
-                    calcObj.chatter.push("`" + v + "` is a: " + typeof v + " with value: " + v);
+                    console.log(v + " is a: " + typeof v + " with value: " + v);
                 }
             }
 
-            // constrain screened value to < 10 characters
+            /*
+             * TRIM ALL VALUES TO 10 CHARACTERS OR LESS
+             * @param num number
+             */
             function trim(num) {
-                if (num.toString().indexOf('.') < 0 && num.toString().length > 10) {
-                    // no decimal, longer than 10 chars
+                var numLen, truncLen, tempVal;
+
+                numLen = num.toString().length;
+                truncLen = (Math.trunc(Number(num))).toString().length;
+                if (numLen === truncLen && numLen > 10) {
                     num = 'ERROR';
-                } else if (num.toString().indexOf('.') > -1 && num.toString().length > 10) {
-                    num = Number(num);
-                    num = Math.round(num * Math.pow(10, Math.round(num).toString().length)) /
-                        Math.pow(10, Math.round(num).toString().length);
+                } else if (numLen > truncLen) {
+                    tempVal = (Math.round(Number(num) * Math.pow(10, (10 - truncLen)))) / Math.pow(10, (10 - truncLen));
+                    num = tempVal.toString();
                 }
                 return num.toString();
             }
 
             /*
-             * perform a single operation
+             * PERFORM A SINGLE OPERATION
              * @param l string
              * @param o string
              * @param r string
@@ -112,9 +152,10 @@
                 screen: '0',
 
                 updateBuffer: function (b) {
-                    //console.log('expression: ' + this.left + ' ' + this.operator + ' ' + this.right);
 
-                    // ====================== clear the buffer
+                    /*
+                     * CLEAR THE BUFFER
+                     */
                     if (b === 'C') {
                         this.screenFlag = 1;
                         this.regA = 'empty';
@@ -122,7 +163,7 @@
                         this.regC = 'empty';
                         this.opA = 'empty';
                         this.opB = 'empty';
-                        console.log('Cleared!!');
+                        calcObj.chatter.length = 0;
                     }
 
                     /*
@@ -203,39 +244,19 @@
                                 this.screenFlag = 2;
                             } else {
                                 this.regA = operate(this.regA, this.opA, this.regB);
-                                //              if ( this.regA === 'DIV BY 0' ) {
-                                //                this.regA = 'DIV BY 0';
-                                //                this.regB = 'empty';
-                                //                this.regC = 'empty';
-                                //                this.opA = 'empty';
-                                //                this.opB = 'empty';
-                                //                this.screenFlag = 1;
-                                //              }
-                                //              else {
                                 this.opA = b;
                                 this.screenFlag = 1;
-                                //              }
                             }
                             break;
                         case 4:
                             if (b === '+' || b === '-') {
-                                this.regB = operate(
-                                    this.regA, this.opA, operate(this.regB, this.opB, this.regB));
-                                //              if ( this.regA === 'DIV BY 0' ) {
-                                //                this.regA = 'DIV BY 0';
-                                //                this.regB = 'empty';
-                                //                this.regC = 'empty';
-                                //                this.opA = 'empty';
-                                //                this.opB = 'empty';
-                                //                this.screenFlag = 1;
-                                //              }
-                                //              else {
+                                this.regB = operate(this.regA, this.opA,
+                                                    operate(this.regB, this.opB, this.regB));
                                 this.regA = 'empty';
                                 this.regC = 'empty';
                                 this.opB = 'empty';
                                 this.opA = b;
                                 this.screenFlag = 1;
-                                //              }
                             } else {
                                 this.opB = b;
                                 this.screenFlag = 2;
@@ -243,38 +264,18 @@
                             break;
                         case 5:
                             if (b === '+' || b === '-') {
-                                this.regB = operate(
-                                    this.regA, this.opA, operate(this.regB, this.opB, this.regC));
-                                //              if ( this.regB === 'DIV BY 0' ) {
-                                //                this.regA = 'DIV BY 0';
-                                //                this.regB = 'empty';
-                                //                this.regC = 'empty';
-                                //                this.opA = 'empty';
-                                //                this.opB = 'empty';
-                                //                this.screenFlag = 1;
-                                //              }
-                                //              else {
+                                this.regB = operate(this.regA, this.opA,
+                                                    operate(this.regB, this.opB, this.regC));
                                 this.regA = 'empty';
                                 this.regC = 'empty';
                                 this.opB = 'empty';
                                 this.opA = b;
                                 this.screenFlag = 1;
-                                //              }
                             } else {
                                 this.regB = operate(this.regB, this.opB, this.regC);
-                                //              if ( this.regB === 'DIV BY 0' ) {
-                                //                this.regA = 'DIV BY 0';
-                                //                this.regB = 'empty';
-                                //                this.regC = 'empty';
-                                //                this.opA = 'empty';
-                                //                this.opB = 'empty';
-                                //                this.screenFlag = 1;
-                                //              }
-                                //              else {
                                 this.regC = 'empty';
                                 this.opB = b;
                                 this.screenFlag = 2;
-                                //              }
                             }
                             break;
                         case 6:
@@ -479,7 +480,6 @@
                      */
                     if (b === '=') {
                         this.screenFlag = 1;
-                        console.log('you just hit =');
                         switch (calState(this.regA, this.regB, this.regC, this.opA, this.opB)) {
                         case 1:
                             break;
@@ -516,8 +516,8 @@
                             }
                             break;
                         case 4:
-                            this.regA = operate(
-                                this.regA, this.opA, operate(this.regB, this.opB, this.regB));
+                            this.regA = operate(this.regA, this.opA,
+                                                operate(this.regB, this.opB, this.regB));
                             if (this.regA === 'DIV BY 0') {
                                 this.regA = 'DIV BY 0';
                                 this.regB = 'empty';
@@ -533,8 +533,8 @@
                             }
                             break;
                         case 5:
-                            this.regA = operate(
-                                this.regA, this.opA, operate(this.regB, this.opB, this.regC));
+                            this.regA = operate(this.regA, this.opA,
+                                                operate(this.regB, this.opB, this.regC));
                             if (this.regA === 'DIV BY 0') {
                                 this.regA = 'DIV BY 0';
                                 this.regB = 'empty';
@@ -564,39 +564,52 @@
                         } else {
                             this.screen = this.regA;
                         }
-                        console.log('screen = regA');
+                        // calcObj.chatter.push('screen = regA');
+                        chatObj.screen = 'regA';
                     }
                     if (this.screenFlag === 2) {
                         this.screen = this.regB;
-                        console.log('screen = regB');
+                        // calcObj.chatter.push('screen = regB');
+                        chatObj.screen = 'regB';
                     }
                     if (this.screenFlag === 3) {
                         this.screen = this.regC;
-                        console.log('screen = regC');
+                        // calcObj.chatter.push('screen = regC');
+                        chatObj.screen = 'regC';
                     }
 
-                    console.log('regA = ' + this.regA);
-                    console.log('regB = ' + this.regB);
-                    console.log('regC = ' + this.regC);
-                    console.log('opA = ' + this.opA);
-                    console.log('opB = ' + this.opB);
-                    // last but not least, trim that bitch
-                    //      if ( this.screen.length > 10 ) {
-                    //        this.screen = trim(this.screen);
+                    // calcObj.chatter.push('regA = ' + this.regA);
+                    chatObj.regA = this.regA;
+
+                    // calcObj.chatter.push('regB = ' + this.regB);
+                    chatObj.regB = this.regB;
+
+                    // calcObj.chatter.push('regC = ' + this.regC);
+                    chatObj.regC = this.regC;
+
+                    // calcObj.chatter.push('opA = ' + this.opA);
+                    chatObj.opA = this.opA;
+
+                    // calcObj.chatter.push('opB = ' + this.opB);
+                    chatObj.opB = this.opB;
+
+                    calcObj.chatter.push(chatObj);
+                    chatObj = {};
+
 
                     return {
-                        regA  : this.regA,
-                        regB  : this.regB,
-                        regC  : this.regC,
-                        opA   : this.opA,
-                        opB   : this.opB,
+                        regA: this.regA,
+                        regB: this.regB,
+                        regC: this.regC,
+                        opA: this.opA,
+                        opB: this.opB,
                         screen: this.screen
                     };
                 }
             };
 
-        // return our object
-        return calcObj;
+            // return our object
+            return calcObj;
 
         });
 })();

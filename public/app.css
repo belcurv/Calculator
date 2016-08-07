@@ -5,8 +5,8 @@ html, body {
 body {
     margin: 0px;
     padding: 0px;
-    font-family: 'Trebuchet MS',Helvetica,sans-serif;
-    font-size: 12px;
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
     background: #354044;
     color: #f8fafa;
     display: -webkit-flex;
@@ -17,6 +17,11 @@ body {
        -moz-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
+}
+
+a {
+    color: orange;
+    text-decoration: none;
 }
 
 #main {
@@ -44,7 +49,7 @@ body {
     border: 1px solid black;
     background: rgba(147, 128, 108, 0.1);
 */
-    flex: 3 1 40%;
+    flex: 3 1 30%;
     order: 2;
 }
 
@@ -53,7 +58,7 @@ body {
     padding: 5px;
     border: 1px solid black;
     background: rgba(147, 128, 108, 0.1);
-    flex: 1 6 20%;
+    flex: 1 6 30%;
     order: 1;
 }
 
@@ -75,6 +80,8 @@ header, footer {
         -ms-flex: 0 0 50px;
             flex: 0 0 50px;
 }
+
+
 
 /* Too narrow to support 3 columns */
 @media all and (max-width: 640px) {

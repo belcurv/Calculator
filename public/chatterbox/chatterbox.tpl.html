@@ -1,8 +1,24 @@
 <div class="calcApp-chatterbox">
+    
     <h3>Chatter Box</h3>
-    <ul>
-        <li ng-repeat="jabber in vm.chatter track by $index">
-            {{jabber}}
-        </li>
-    </ul>
+    
+    <table>
+        <tr>
+            <td>Screen</td>
+            <td>regA</td>
+            <td>regB</td>
+            <td>regC</td>
+            <td>opA</td>
+            <td>opB</td>
+        </tr>
+        <tr ng-repeat="c in vm.chatter track by $index">
+            <td>{{ c.screen }}</td>
+            <td>{{ c.regA }}</td>
+            <td>{{ c.regB }}</td>
+            <td>{{ c.regC }}</td>
+            <td>{{ c.opA }}</td>
+            <td>{{ c.opB }}</td>
+        </tr>
+    
+    </table>
 </div>
