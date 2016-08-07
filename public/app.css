@@ -84,7 +84,7 @@ header, footer {
 
 
 /* Too narrow to support 3 columns */
-@media all and (max-width: 640px) {
+@media all and (max-width: 720px) {
     #main,
     #page {
         flex-direction: column;

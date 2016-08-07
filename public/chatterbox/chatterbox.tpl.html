@@ -2,23 +2,29 @@
     
     <h3>Chatter Box</h3>
     
-    <table>
-        <tr>
-            <td>Screen</td>
-            <td>regA</td>
-            <td>regB</td>
-            <td>regC</td>
-            <td>opA</td>
-            <td>opB</td>
-        </tr>
-        <tr ng-repeat="c in vm.chatter track by $index">
-            <td>{{ c.screen }}</td>
-            <td>{{ c.regA }}</td>
-            <td>{{ c.regB }}</td>
-            <td>{{ c.regC }}</td>
-            <td>{{ c.opA }}</td>
-            <td>{{ c.opB }}</td>
-        </tr>
-    
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Screen</th>
+                <th>regA</th>
+                <th>regB</th>
+                <th>regC</th>
+                <th>opA</th>
+                <th>opB</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr ng-repeat="c in vm.chatter track by $index">
+                <td>{{ $index }}</td>
+                <td>{{ c.screen }}</td>
+                <td>{{ c.regA }}</td>
+                <td>{{ c.regB }}</td>
+                <td>{{ c.regC }}</td>
+                <td>{{ c.opA }}</td>
+                <td>{{ c.opB }}</td>
+            </tr>
+        </tbody>
     </table>
 </div>

@@ -1,0 +1,48 @@
+.calcApp-chatterbox {
+    
+    /* get this to scroll */
+    overflow-y: scroll;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    background-color: transparent;
+    width: 100%;
+    max-width: 100%;
+    
+}
+
+th {
+    text-align: left;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td {
+    padding: 5px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid rgba(147, 128, 108, 0.1);
+}
+
+.table > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid rgba(147, 128, 108, 0.1);
+}
+
+.table > thead:first-child > tr:first-child > th,
+.table > thead:first-child > tr:first-child > td {
+    border-top: 0;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #000;
+}
