@@ -1,6 +1,6 @@
 .calcApp-chatterbox {
-    
-    /* get this to scroll */
+    /* need height for overflow scroll */
+    height: 80vh;
     overflow-y: scroll;
 }
 
